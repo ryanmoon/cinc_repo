@@ -1,0 +1,84 @@
+# Mouse Settings
+set -g mouse on
+# set -g mouse-select-pane on
+# History
+set -g history-limit 102400
+# Window Management
+set -g base-index 1
+setw -g pane-base-index 1
+set -g renumber-windows on
+bind c new-window -c "#{pane_current_path}"
+# Keybinds
+set -g prefix C-a
+unbind C-b
+unbind Left
+unbind Down
+unbind Up
+unbind Right
+# bind -n M-Left select-pane -L
+# bind -n M-Right select-pane -R
+# bind -n M-Up select-pane -U
+# bind -n M-Down select-pane -D
+bind -n S-Left previous-window
+bind -n S-Right next-window
+# Copy Mode
+unbind-key -T copy-mode-vi v
+
+bind-key -T copy-mode-vi v \
+	send-keys -X begin-selection
+
+bind-key -T copy-mode-vi 'C-v' \
+	send-keys -X rectangle-toggle
+
+bind-key -T copy-mode-vi y \
+	send-keys -X copy-pipe-and-cancel "pbcopy"
+
+bind-key -T copy-mode-vi MouseDragEnd1Pane \
+	send-keys -X copy-pipe-and-cancel "pbcopy"
+# Reload
+bind r source-file ~/.tmux.conf \; display "PIZZA TIME!"
+# Color
+set -g default-terminal "screen-256color"
+## Status Bar
+set-option -g status-bg colour235 #base02
+set-option -g status-fg colour136 #yellow
+# set-option -g status-attr default
+# ~/.tmux.conf
+
+set -g status-left-length 20
+set -g status-left "#{prefix_highlight} #[fg=green]🍪  | #S"
+
+set -g status-right-length 100
+set -g status-right "#[fg=orange]| 💻  #{cpu_percentage} | Online: #{online_status} | #[fg=cyan]%a %h-%d %H:%M"
+
+set -g status-interval 5
+set -g status-justify centre
+setw -g monitor-activity on
+set -g visual-activity on
+set-window-option -g aggressive-resize on
+## Status Keys
+set -g status-keys emacs
+# turn off all the bell sounds
+set -g visual-activity off
+set -g visual-bell off
+set -g visual-silence off
+setw -g monitor-activity off
+set -g bell-action none
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-cpu'
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-online-status'
+set -g @plugin 'lljbash/tmux-update-display'
+
+# Other examples:
+# set -g @plugin 'github_username/plugin_name'
+# set -g @plugin 'github_username/plugin_name#branch'
+# set -g @plugin 'git@github.com:user/plugin'
+# set -g @plugin 'git@bitbucket.com:user/plugin'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'

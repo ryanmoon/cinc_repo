@@ -1,0 +1,56 @@
+#############################
+# MOON'S CUSTOM BASH_PROFILE
+#############################
+
+########################
+# BASH HISTORY SETTINGS
+########################
+
+export HISTTIMEFORMAT='%F %T '
+export HISTCONTROL=ignoredups:erasedups
+export HISTSIZE=10000
+shopt -s histappend
+export HISTIGNORE="&:[ ]*:clear"
+export PROMPT_COMMAND='history -a'
+
+###################
+# MAKE BASH PRETTY
+###################
+
+export CLICOLOR=1
+export LSCOLORS=ExxxxxDxBxegedabxxacad
+
+##########
+# ALIASES
+##########
+
+alias gs="git status"
+alias gaa="git add --all"
+alias gc="git commit"
+
+###########
+# STARSHIP
+###########
+
+eval "$(/usr/local/bin/starship init bash)"
+export STARSHIP_CONFIG="<%= @starship_path %>/starship.toml"
+
+#######
+# PATH
+#######
+
+PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
+
+#######
+# TMUX
+#######
+
+tmux has -t scritches &> /dev/null
+
+if [ $? != 0 ]; then
+  tmux -2 new-session -s scritches -D -d
+fi
+
+if [ -z "$TMUX" ]; then
+  tmux attach -t scritches -d
+fi
